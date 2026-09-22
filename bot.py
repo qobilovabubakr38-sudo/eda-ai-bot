@@ -32,23 +32,26 @@ def get_author_markup():
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
-    print(f"[BOT] Received /start from {message.from_user.id} ({message.from_user.first_name})", flush=True)
-    user_name = message.from_user.first_name or "Do'stim"
-    welcome_text = (
-        f"Assalomu alaykum, <b>{user_name}</b>! 👋\n\n"
-        "Men <b>EDA.AI</b> — taom kaloriyasini va tarkibini aniqlovchi aqlli yordamchingizman. 🥗\n\n"
-        "📸 <b>Menga istalgan taom suratini yuboring</b>, men:\n"
-        "• Taom nomi va taxminiy vaznini aniqlayman\n"
-        "• Umumiy kaloriyasini (kkal) hisoblayman\n"
-        "• Oqsil, yog' va uglevodlar (BJU) balansini chiqaraman\n"
-        "• Masalliqlar va foydali tavsiyalar beraman!\n\n"
-        "━━━━━━━━━━━━━━━━━━\n"
-        "👨‍💻 <b>Muallif:</b> Qobilov Abubakr\n"
-        "💬 <b>Qo'llab-quvvatlash:</b> @uzb106\n"
-        "━━━━━━━━━━━━━━━━━━\n\n"
-        "<i>Suratni kameradan olib yoki galereyadan yuborishingiz mumkin.</i>"
-    )
-    bot.reply_to(message, welcome_text, reply_markup=get_author_markup())
+    try:
+        print(f"[BOT] Received /start from {message.from_user.id} ({message.from_user.first_name})", flush=True)
+        user_name = message.from_user.first_name or "Do'stim"
+        welcome_text = (
+            f"Assalomu alaykum, <b>{user_name}</b>! 👋\n\n"
+            "Men <b>EDA.AI</b> — taom kaloriyasini va tarkibini aniqlovchi aqlli yordamchingizman. 🥗\n\n"
+            "📸 <b>Menga istalgan taom suratini yuboring</b>, men:\n"
+            "• Taom nomi va taxminiy vaznini aniqlayman\n"
+            "• Umumiy kaloriyasini (kkal) hisoblayman\n"
+            "• Oqsil, yog' va uglevodlar (BJU) balansini chiqaraman\n"
+            "• Masalliqlar va foydali tavsiyalar beraman!\n\n"
+            "━━━━━━━━━━━━━━━━━━\n"
+            "👨‍💻 <b>Muallif:</b> Qobilov Abubakr\n"
+            "💬 <b>Qo'llab-quvvatlash:</b> @uzb106\n"
+            "━━━━━━━━━━━━━━━━━━\n\n"
+            "<i>Suratni kameradan olib yoki galereyadan yuborishingiz mumkin.</i>"
+        )
+        bot.send_message(message.chat.id, welcome_text, reply_markup=get_author_markup())
+    except Exception as e:
+        print(f"Error in send_welcome: {e}", flush=True)
 
 @bot.message_handler(commands=['about'])
 def send_about(message):
@@ -162,7 +165,7 @@ if __name__ == "__main__":
     print("[EDA.AI] Telegram boti muvaffaqiyatli ishga tushirildi...", flush=True)
     while True:
         try:
-            bot.infinity_polling(timeout=60, long_polling_timeout=60)
+            bot.infinity_polling(timeout=10, long_polling_timeout=5)
         except Exception as e:
             print(f"Telegram ulanish xatosi: {e}", flush=True)
-            time.sleep(5)
+            time.sleep(2)
