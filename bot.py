@@ -32,6 +32,7 @@ def get_author_markup():
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
+    print(f"[BOT] Received /start from {message.from_user.id} ({message.from_user.first_name})", flush=True)
     user_name = message.from_user.first_name or "Do'stim"
     welcome_text = (
         f"Assalomu alaykum, <b>{user_name}</b>! 👋\n\n"
@@ -158,10 +159,10 @@ def start_health_server():
 if __name__ == "__main__":
     # Bulutli serverlarda (Render, Railway va h.k.) 24/7 ishlashi uchun fon veb-serveri
     threading.Thread(target=start_health_server, daemon=True).start()
-    print("[EDA.AI] Telegram boti muvaffaqiyatli ishga tushirildi...")
+    print("[EDA.AI] Telegram boti muvaffaqiyatli ishga tushirildi...", flush=True)
     while True:
         try:
             bot.infinity_polling(timeout=60, long_polling_timeout=60)
         except Exception as e:
-            print("Telegram ulanish xatosi, 5 soniyadan keyin qayta ulanadi:", e)
+            print(f"Telegram ulanish xatosi: {e}", flush=True)
             time.sleep(5)
