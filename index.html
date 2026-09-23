@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDA.AI - Taom Tahlili va Kaloriya Hisoblagich</title>
+    <meta name="theme-color" content="#8a2be2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0e12;
+            --card-bg: #16181f;
+            --card-border: #262936;
+            --primary: #8a2be2;
+            --primary-light: #9d4edd;
+            --primary-glow: rgba(138, 43, 226, 0.25);
+            --protein: #3b82f6;
+            --fat: #f59e0b;
+            --carb: #10b981;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 960px;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logo span {
+            color: var(--primary);
+            text-shadow: 0 0 16px var(--primary-glow);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .badge-status {
+            font-size: 0.82rem;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(16, 185, 129, 0.12);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-key {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-key:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        /* Hero Banner */
+        .hero {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .hero h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ffffff 40%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+
+        /* Quick Samples */
+        .samples-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .samples-label {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .sample-chip {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .sample-chip:hover {
+            border-color: var(--primary);
+            background: rgba(138, 43, 226, 0.1);
+        }
+
+        /* Upload Area */
+        .upload-card {
+            background: var(--card-bg);
+            border: 2px dashed var(--card-border);
+            border-radius: 20px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+
+        .upload-card:hover, .upload-card.dragover {
+            border-color: var(--primary);
+            background: rgba(22, 24, 31, 0.9);
+            box-shadow: 0 0 25px var(--primary-glow);
+        }
+
+        .upload-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(138, 43, 226, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: var(--primary-light);
+        }
+
+        .upload-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .upload-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .btn-upload {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #ffffff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px var(--primary-glow);
+            transition: transform 0.2s ease;
+        }
+
+        .btn-upload:hover {
+            transform: translateY(-2px);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Image Preview Box */
+        .preview-box {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .preview-img {
+            max-width: 320px;
+            max-height: 240px;
+            border-radius: 14px;
+            object-fit: cover;
+            border: 2px solid var(--card-border);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Loading Spinner */
+        .loading-state {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .pulse-loader {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            border: 4px solid var(--card-border);
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Result View */
+        .result-container {
+            display: none;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            margin-bottom: 40px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .dish-meta h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .dish-cuisine {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-confidence {
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 8px;
+            background: rgba(138, 43, 226, 0.15);
+            color: #c084fc;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            font-weight: 600;
+        }
+
+        /* Macro Hero Grid */
+        .macro-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .macro-card {
+            background: #1c1e28;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.04);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .macro-card.calories {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), #1c1e28);
+            border-color: rgba(138, 43, 226, 0.3);
+        }
+
+        .macro-title {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .macro-val {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .macro-unit {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .macro-sub {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .bar-protein { color: var(--protein); }
+        .bar-fat { color: var(--fat); }
+        .bar-carb { color: var(--carb); }
+
+        /* Progress Line */
+        .macro-progress {
+            height: 6px;
+            width: 100%;
+            background: rgba(255,255,255,0.08);
+            border-radius: 999px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .macro-fill {
+            height: 100%;
+            border-radius: 999px;
+        }
+
+        /* Ingredients & Breakdown */
+        .section-box {
+            margin-top: 24px;
+            background: #1a1c25;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .section-box h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ingredients-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .ing-pill {
+            background: #232634;
+            border: 1px solid var(--card-border);
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ing-pill strong {
+            color: #a78bfa;
+        }
+
+        /* Advice Box */
+        .advice-box {
+            margin-top: 20px;
+            background: rgba(138, 43, 226, 0.08);
+            border-left: 4px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 0 14px 14px 0;
+        }
+
+        .advice-box h4 {
+            color: var(--primary-light);
+            font-size: 0.98rem;
+            margin-bottom: 6px;
+        }
+
+        .advice-box p {
+            font-size: 0.92rem;
+            color: #d1d5db;
+            line-height: 1.5;
+        }
+
+        /* Key Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-card {
+            background: #1a1c25;
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 28px;
+            max-width: 480px;
+            width: 100%;
+        }
+
+        .modal-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .modal-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .modal-card input {
+            width: 100%;
+            background: #111218;
+            border: 1px solid var(--card-border);
+            padding: 12px 14px;
+            border-radius: 10px;
+            color: #fff;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--card-border);
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .get-key-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #2563eb, #8a2be2);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+        }
+
+        .get-key-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.45);
+        }
+
+        .key-steps {
+            background: #111218;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            font-size: 0.85rem;
+            color: #d1d5db;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        /* Author Showcase & Order Card */
+        .author-showcase-card {
+            background: linear-gradient(145deg, #161822, #1c1d28);
+            border: 1px solid rgba(138, 43, 226, 0.35);
+            border-radius: 20px;
+            padding: 28px 24px;
+            margin-top: 36px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(138, 43, 226, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .author-showcase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #8a2be2, #10b981);
+        }
+
+        .author-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(138, 43, 226, 0.15);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            color: #c084fc;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .author-main {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #8a2be2, #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .author-details h3 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .author-role {
+            font-size: 0.92rem;
+            color: #a78bfa;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .author-bio {
+            font-size: 0.88rem;
+            color: #9ca3af;
+            line-height: 1.5;
+        }
+
+        .author-contact-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .telegram-btn {
+            background: linear-gradient(135deg, #0284c7, #0ea5e9);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+        }
+
+        .telegram-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(14, 165, 233, 0.45);
+        }
+
+        .phone-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--card-border);
+            color: #f3f4f6;
+        }
+
+        .phone-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: #a78bfa;
+            transform: translateY(-2px);
+        }
+
+        .bot-btn {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #34d399;
+        }
+
+        .bot-btn:hover {
+            background: rgba(16, 185, 129, 0.2);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                EDA<span>AI</span>
+                <span style="font-size: 0.8rem; font-weight: 600; color: #a78bfa; background: rgba(138,43,226,0.15); padding: 2px 8px; border-radius: 6px; margin-left: 8px;">Toshkent Edition 🚀</span>
+            </div>
+            <div class="header-actions">
+                <a href="https://t.me/EdaAiNutrition_bot" target="_blank" style="text-decoration:none; background: #229ED9; color: white; padding: 8px 14px; border-radius: 10px; font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(34,158,217,0.35);">
+                    🤖 Telegram Bot
+                </a>
+                <span id="api-indicator" class="badge-status" style="border-color: rgba(16, 185, 129, 0.4); color: #34d399;">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981;"></span>
+                    <span id="api-indicator-text">Gemini Vision AI Faol</span>
+                </span>
+            </div>
+        </header>
+
+        <!-- Hero -->
+        <div class="hero">
+            <h1>Taomingizni rasmga oling</h1>
+            <p>Sun'iy intellekt taomni bir zumda taniydi, og'irligini va barcha kaloriyalarini (oqsil, yog', uglevod) aniq hisoblab beradi.</p>
+        </div>
+
+        <!-- Samples -->
+        <div class="samples-box">
+            <span class="samples-label">Tezkor namunalar:</span>
+            <button class="sample-chip" onclick="loadSample('osh')">🍲 Toshkentcha Osh</button>
+            <button class="sample-chip" onclick="loadSample('somsa')">🥟 Tandir Somsa</button>
+            <button class="sample-chip" onclick="loadSample('shashlik')">🍢 Qiyma Shashlik</button>
+            <button class="sample-chip" onclick="loadSample('salat')">🥗 Achchiq-chuchuk Salati</button>
+        </div>
+
+        <!-- Upload Box -->
+        <div class="upload-card" id="drop-zone" onclick="triggerFileInput()">
+            <div id="upload-prompt">
+                <div class="upload-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                </div>
+                <div class="upload-title">Taom rasmini yuklang yoki tashlang</div>
+                <div class="upload-subtitle">JPG, PNG formatlar qo'llab-quvvatlanadi</div>
+                <button class="btn-upload" type="button">
+                    <span>Surat tanlash</span>
+                </button>
+            </div>
+
+            <div class="preview-box" id="preview-box">
+                <img id="preview-img" class="preview-img" src="" alt="Taom surati">
+                <button class="btn-upload" type="button" onclick="event.stopPropagation(); triggerFileInput();" style="font-size: 0.85rem; padding: 8px 18px;">
+                    Boshqa rasm tanlash
+                </button>
+            </div>
+
+            <input type="file" id="file-input" accept="image/*" onchange="handleFileSelect(event)">
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading-state" id="loading-state">
+            <div class="pulse-loader"></div>
+            <h3 style="font-size: 1.2rem; margin-bottom: 6px;">Taom skanerlanmoqda...</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Gemini AI masalliqlarni va kaloriya balansini hisoblamoqda</p>
+        </div>
+
+        <!-- Results Card -->
+        <div class="result-container" id="result-container">
+            <div class="result-header">
+                <div class="dish-meta">
+                    <h2 id="res-dish-name">Osh (Palov)</h2>
+                    <div class="dish-cuisine">
+                        <span id="res-cuisine">O'zbek milliy oshxonasi</span> •
+                        <span id="res-weight">400 g</span>
+                    </div>
+                </div>
+                <div>
+                    <span id="res-confidence" class="badge-confidence">Ishonch: Yuqori</span>
+                </div>
+            </div>
+
+            <!-- Macros Grid -->
+            <div class="macro-grid">
+                <div class="macro-card calories">
+                    <div class="macro-title">🔥 Umumiy Kaloriya</div>
+                    <div class="macro-val" id="res-calories">860 <span class="macro-unit">kkal</span></div>
+                    <div class="macro-sub" id="res-verdict">To'yimli taom</div>
+                </div>
+
+                <div class="macro-card">
+                    <div class="macro-title bar-protein">🥩 Oqsillar (Protein)</div>
+                    <div class="macro-val bar-protein" id="res-protein">28.5 <span class="macro-unit">g</span></div>
+                    <div class="macro-progress">
+                        <div id="bar-protein-fill" class="macro-fill" style="width: 25%; background: var(--protein);"></div>
+                    </div>
+                </div>
+
+                <div class="macro-card">
+                    <div class="macro-title bar-fat">🥑 Yog'lar (Fats)</div>
+                    <div class="macro-val bar-fat" id="res-fats">42.0 <span class="macro-unit">g</span></div>
+                    <div class="macro-progress">
+                        <div id="bar-fat-fill" class="macro-fill" style="width: 45%; background: var(--fat);"></div>
+                    </div>
+                </div>
+
+                <div class="macro-card">
+                    <div class="macro-title bar-carb">🍞 Uglevodlar (Carbs)</div>
+                    <div class="macro-val bar-carb" id="res-carbs">92.0 <span class="macro-unit">g</span></div>
+                    <div class="macro-progress">
+                        <div id="bar-carb-fill" class="macro-fill" style="width: 55%; background: var(--carb);"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ingredients -->
+            <div class="section-box">
+                <h3>🥕 Aniqlangan asosiy masalliqlar</h3>
+                <div class="ingredients-list" id="res-ingredients">
+                    <!-- Ingredients will be rendered here -->
+                </div>
+            </div>
+
+            <!-- Advice Box -->
+            <div class="advice-box">
+                <h4>💡 Tahlilchi tavsiyasi:</h4>
+                <p id="res-advice">Tushlik uchun ajoyib quvvat manbai.</p>
+            </div>
+        </div>
+
+        <!-- Muallif va Veb-saytga Buyurtma Berish Bloki -->
+        <div class="author-showcase-card">
+            <div class="author-badge">👑 Veb-Dasturchi va Muallif</div>
+            <div class="author-main">
+                <div class="author-avatar">👨‍💻</div>
+                <div class="author-details">
+                    <h3>Qobilov Abubakr</h3>
+                    <p class="author-role">Professional Veb-Dasturchi (Web Developer & AI Integrator)</p>
+                    <p class="author-bio">Ushbu <b>EDA.AI</b> veb-ilovasi va Telegram boti Sun'iy Intellekt (Gemini Vision) asosida noldan yaratilgan. Sizning biznesingiz (do'kon, kafe, mebel, o'quv markazi) uchun ham shunday zamonaviy, tezkor va chiroyli veb-saytlar va Telegram botlar yasab beraman!</p>
+                </div>
+            </div>
+            <div class="author-contact-row">
+                <a href="https://t.me/uzb106" target="_blank" class="contact-btn telegram-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.52 2.77-1.18 3.35-1.39 3.73-1.39.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+                    <span>Telegram: @uzb106</span>
+                </a>
+                <a href="tel:+998775278286" class="contact-btn phone-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    <span>Tel: +998 77 527 82 86</span>
+                </a>
+                <a href="https://t.me/EdaAiNutrition_bot" target="_blank" class="contact-btn bot-btn">
+                    <span>🤖 Telegram Boti</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Key Modal -->
+    <div class="modal-overlay" id="key-modal" onclick="closeKeyModal(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h3 style="font-size: 1.3rem;">Gemini API Kaliti</h3>
+                <button onclick="closeKeyModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.4rem; cursor: pointer;">&times;</button>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 16px;">
+                Sun'iy intellekt taomni real vaqtda aniqlashi uchun bepul API kalit kerak. Har bir foydalanuvchi o'z kalitini mutlaqo bepul olishi mumkin.
+            </p>
+
+            <!-- Direct Clickable Link to Google AI Studio -->
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="get-key-btn">
+                <span>🔑 Bepul API Kalit Olish (aistudio.google.com)</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+            </a>
+
+            <!-- Quick Steps -->
+            <div class="key-steps">
+                <div><b>1.</b> Yuqoridagi ko'k tugmani bosing (Google AI Studio ochiladi).</div>
+                <div><b>2.</b> <b>"Create API key"</b> tugmasini bosing va kalitni nusxalang (Copy).</div>
+                <div><b>3.</b> Nusxalangan kalitni pastga qo'yib, <b>"Saqlash"</b> tugmasini bosing.</div>
+            </div>
+
+            <input type="password" id="input-api-key" placeholder="AIzaSy..." style="margin-bottom: 16px;">
+            
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeKeyModal()">Yopish</button>
+                <button class="btn-upload" style="font-size: 0.9rem; padding: 10px 22px;" onclick="saveApiKey()">Saqlash</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const previewBox = document.getElementById('preview-box');
+        const uploadPrompt = document.getElementById('upload-prompt');
+        const previewImg = document.getElementById('preview-img');
+        const loadingState = document.getElementById('loading-state');
+        const resultContainer = document.getElementById('result-container');
+
+        // Check initial config and localStorage
+        window.addEventListener('DOMContentLoaded', async () => {
+            const localKey = localStorage.getItem('gemini_user_api_key');
+            const indicator = document.getElementById('api-indicator');
+            const indicatorText = document.getElementById('api-indicator-text');
+            const inputField = document.getElementById('input-api-key');
+
+            if (localKey) {
+                inputField.value = localKey;
+                indicatorText.innerText = "AI Kaliti Faol";
+                indicator.style.borderColor = "rgba(16, 185, 129, 0.4)";
+                indicator.style.color = "#34d399";
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/config');
+                const data = await res.json();
+                if (data.has_api_key) {
+                    indicatorText.innerText = "Server Kaliti Faol";
+                } else {
+                    indicatorText.innerText = "Kalit Kiritilmagan";
+                    indicator.style.borderColor = "#f59e0b";
+                    indicator.style.color = "#f59e0b";
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        });
+
+        function triggerFileInput() {
+            fileInput.click();
+        }
+
+        // Drag and Drop
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropZone.classList.add('dragover');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+            }, false);
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files.length > 0) {
+                processFile(files[0]);
+            }
+        });
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                processFile(file);
+            }
+        }
+
+        function processFile(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                uploadPrompt.style.display = 'none';
+                previewBox.style.display = 'flex';
+                uploadAndAnalyze(file);
+            }
+            reader.readAsDataURL(file);
+        }
+
+        async function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    const result = reader.result;
+                    const base64 = result.split(',')[1];
+                    resolve(base64);
+                };
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        async function analyzeWithDirectGemini(file, apiKey) {
+            const base64Data = await fileToBase64(file);
+            const prompt = `Siz dunyodagi eng tajribali parhezshunos va ovqat kaloriyasini aniqlovchi EDA.AI modeli hisoblanasiz.
+Rasmda tasvirlangan taomni (ayniqsa O'zbek milliy taomlari yoki umumjahon taomlarini) diqqat bilan o'rganing.
+Porsiya hajmini va masalliqlarini baholab, aniq hisoblab quyidagi JSON sxemasi bo'yicha toza JSON qaytaring:
+{
+  "food_name": "Taom nomi (o'zbek tilida)",
+  "cuisine_type": "Oshxona turi",
+  "total_weight_g": 350,
+  "calories": 650,
+  "protein": 24.5,
+  "fats": 30.0,
+  "carbs": 70.0,
+  "ingredients": [{"name": "Masalliq nomi", "amount_g": 80}],
+  "health_verdict": "Qisqa xulosa",
+  "dietary_advice": "Foydali tavsiya",
+  "confidence": "Yuqori"
+}
+Faqat sof JSON qaytaring, hech qanday markdown yoki qo'shimcha so'zsiz.`;
+
+            const DEFAULT_GEMINI_KEY = atob("QVEuQWI4Uk42SVp4RmRxNUF0WVlGaUZFYktYUlhRZXZ4RkowbS1iUTh1SGtrdDNZUDVqaFE=");
+            const keyToUse = apiKey || DEFAULT_GEMINI_KEY;
+
+            // Use Gemini 3.5 Flash Lite for high speed and direct client support
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${keyToUse}`;
+            const payload = {
+                contents: [{
+                    parts: [
+                        { inline_data: { mime_type: file.type || "image/jpeg", data: base64Data } },
+                        { text: prompt }
+                    ]
+                }],
+                generationConfig: {
+                    response_mime_type: "application/json"
+                }
+            };
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                const errData = await response.json().catch(() => ({}));
+                throw new Error(errData.error?.message || `Google Gemini API xatosi (${response.status})`);
+            }
+
+            const resJson = await response.json();
+            const textOutput = resJson.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (!textOutput) throw new Error("AIdan bo'sh javob qaytdi");
+            return JSON.parse(textOutput);
+        }
+
+        const MOCK_FOOD_DATA = {
+            "osh": {
+                "food_name": "Osh (Toshkentcha To'y oshi)",
+                "cuisine_type": "O'zbek milliy oshxonasi",
+                "total_weight_g": 400,
+                "calories": 860,
+                "protein": 28.5,
+                "fats": 42.0,
+                "carbs": 92.0,
+                "ingredients": [
+                    {"name": "Devzira/Lazer guruch", "amount_g": 180},
+                    {"name": "Mol go'shti (laxta)", "amount_g": 90},
+                    {"name": "Sariq va qizil sabzi", "amount_g": 80},
+                    {"name": "Paxta/Dumba yog'i", "amount_g": 35},
+                    {"name": "No'xat va mayiz", "amount_g": 15}
+                ],
+                "health_verdict": "Energetik va to'yimli (Yuqori kaloriyali)",
+                "dietary_advice": "Tushlik uchun ajoyib quvvat manbai. Yog' miqdori yuqori bo'lgani sababli yoniga achchiq-chuchuk salati va ko'k choy ichish hazmni osonlashtiradi.",
+                "confidence": "Yuqori"
+            },
+            "somsa": {
+                "food_name": "Tandir Somsa (Go'shtli)",
+                "cuisine_type": "O'zbek milliy oshxonasi",
+                "total_weight_g": 180,
+                "calories": 460,
+                "protein": 16.0,
+                "fats": 26.0,
+                "carbs": 40.5,
+                "ingredients": [
+                    {"name": "Qatlama xamir", "amount_g": 90},
+                    {"name": "Mol go'shti qiymasi", "amount_g": 60},
+                    {"name": "Piyoz va ziravorlar", "amount_g": 20},
+                    {"name": "Dumba yog'i", "amount_g": 10}
+                ],
+                "health_verdict": "O'rtacha kaloriyali, to'yimli",
+                "dietary_advice": "Tez to'yintiradi, lekin xamiri qatlama va yog'li bo'lgani sababli kunning birinchi yarmida iste'mol qilish tavsiya etiladi.",
+                "confidence": "Yuqori"
+            },
+            "shashlik": {
+                "food_name": "Qiyma Shashlik (Mol go'shti)",
+                "cuisine_type": "O'zbek milliy oshxonasi",
+                "total_weight_g": 200,
+                "calories": 490,
+                "protein": 34.0,
+                "fats": 36.0,
+                "carbs": 6.0,
+                "ingredients": [
+                    {"name": "Mol go'shti (qiyma)", "amount_g": 140},
+                    {"name": "Dumba yog'i", "amount_g": 40},
+                    {"name": "Piyoz va kashnich", "amount_g": 20}
+                ],
+                "health_verdict": "Yuqori oqsilli, parhez va quvvat uchun a'lo",
+                "dietary_advice": "Sportchilar va mushak massasini oshirmoqchi bo'lganlar uchun ajoyib oqsil manbai. Yoniga ko'katlar va limon qo'shib yeyish tavsiya qilinadi.",
+                "confidence": "Yuqori"
+            },
+            "salat": {
+                "food_name": "Achchiq-chuchuk Salati",
+                "cuisine_type": "O'zbek milliy oshxonasi",
+                "total_weight_g": 220,
+                "calories": 85,
+                "protein": 2.4,
+                "fats": 1.2,
+                "carbs": 14.5,
+                "ingredients": [
+                    {"name": "Yusupov pomidori", "amount_g": 120},
+                    {"name": "Bodring", "amount_g": 60},
+                    {"name": "Oq piyoz", "amount_g": 30},
+                    {"name": "Rayhon va ko'katlar", "amount_g": 10}
+                ],
+                "health_verdict": "Juda yengil, parhezbop va vitaminlarga boy (A'lo)",
+                "dietary_advice": "Osh yoki boshqa yog'li go'shtli taomlar yonida hazm qilishni yaxshilaydi, kletchatka va C vitaminiga boy.",
+                "confidence": "Yuqori"
+            }
+        };
+
+        async function uploadAndAnalyze(file) {
+            loadingState.style.display = 'block';
+            resultContainer.style.display = 'none';
+
+            const localKey = localStorage.getItem('gemini_user_api_key');
+
+            // 1. To'g'ridan-to'g'ri o'rnatilgan Gemini AI orqali tahlil (Internetda server-siz ham ishlaydi!)
+            try {
+                const data = await analyzeWithDirectGemini(file, localKey);
+                renderResult(data);
+                return;
+            } catch (err) {
+                console.warn("Direct API call error, trying server fallback:", err);
+            }
+
+            // 2. Server orqali tahlil qilish fallback
+            const formData = new FormData();
+            formData.append('file', file);
+            if (localKey) {
+                formData.append('custom_key', localKey);
+            }
+
+            try {
+                const res = await fetch('/api/analyze', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    throw new Error(err.detail || "Xatolik yuz berdi");
+                }
+
+                const data = await res.json();
+                renderResult(data);
+            } catch (err) {
+                alert("Tahlilda xatolik: " + err.message);
+            } finally {
+                loadingState.style.display = 'none';
+            }
+        }
+
+        async function loadSample(sampleId) {
+            loadingState.style.display = 'block';
+            resultContainer.style.display = 'none';
+
+            // Show sample image placeholder
+            if (sampleId === 'osh') {
+                previewImg.src = "https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?w=600&auto=format&fit=crop&q=80";
+            } else if (sampleId === 'somsa') {
+                previewImg.src = "https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=600&auto=format&fit=crop&q=80";
+            } else if (sampleId === 'shashlik') {
+                previewImg.src = "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&auto=format&fit=crop&q=80";
+            } else if (sampleId === 'salat') {
+                previewImg.src = "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&auto=format&fit=crop&q=80";
+            }
+            uploadPrompt.style.display = 'none';
+            previewBox.style.display = 'flex';
+
+            // 1. Instant client-side load if in MOCK_FOOD_DATA
+            if (MOCK_FOOD_DATA[sampleId]) {
+                setTimeout(() => {
+                    loadingState.style.display = 'none';
+                    renderResult(MOCK_FOOD_DATA[sampleId]);
+                }, 300);
+                return;
+            }
+
+            // Fallback server call
+            try {
+                const formData = new FormData();
+                formData.append('mock_id', sampleId);
+                const res = await fetch('/api/analyze', { method: 'POST', body: formData });
+                const data = await res.json();
+                renderResult(data);
+            } catch (e) {
+                console.error(e);
+            } finally {
+                loadingState.style.display = 'none';
+            }
+        }
+
+        function renderResult(data) {
+            document.getElementById('res-dish-name').innerText = data.food_name;
+            document.getElementById('res-cuisine').innerText = data.cuisine_type;
+            document.getElementById('res-weight').innerText = `${data.total_weight_g} g`;
+            document.getElementById('res-confidence').innerText = `Ishonch: ${data.confidence}`;
+
+            document.getElementById('res-calories').innerHTML = `${Math.round(data.calories)} <span class="macro-unit">kkal</span>`;
+            document.getElementById('res-verdict').innerText = data.health_verdict;
+
+            document.getElementById('res-protein').innerHTML = `${data.protein} <span class="macro-unit">g</span>`;
+            document.getElementById('res-fats').innerHTML = `${data.fats} <span class="macro-unit">g</span>`;
+            document.getElementById('res-carbs').innerHTML = `${data.carbs} <span class="macro-unit">g</span>`;
+
+            // Calculate percentage fills for macros
+            const totalMacros = (data.protein || 0) + (data.fats || 0) + (data.carbs || 0);
+            if (totalMacros > 0) {
+                document.getElementById('bar-protein-fill').style.width = `${(data.protein / totalMacros) * 100}%`;
+                document.getElementById('bar-fat-fill').style.width = `${(data.fats / totalMacros) * 100}%`;
+                document.getElementById('bar-carb-fill').style.width = `${(data.carbs / totalMacros) * 100}%`;
+            }
+
+            // Ingredients
+            const ingContainer = document.getElementById('res-ingredients');
+            ingContainer.innerHTML = '';
+            (data.ingredients || []).forEach(ing => {
+                const pill = document.createElement('div');
+                pill.className = 'ing-pill';
+                pill.innerHTML = `<span>${ing.name}</span> <strong>~${ing.amount_g}g</strong>`;
+                ingContainer.appendChild(pill);
+            });
+
+            // Advice
+            document.getElementById('res-advice').innerText = data.dietary_advice;
+
+            resultContainer.style.display = 'block';
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Modal functions
+        function openKeyModal() {
+            document.getElementById('key-modal').style.display = 'flex';
+        }
+
+        function closeKeyModal(e) {
+            document.getElementById('key-modal').style.display = 'none';
+        }
+
+        async function saveApiKey() {
+            const key = document.getElementById('input-api-key').value.trim();
+            if (!key) {
+                alert("Iltimos, API kalitni kiriting!");
+                return;
+            }
+
+            // Save in user's browser/device storage
+            localStorage.setItem('gemini_user_api_key', key);
+
+            // Also send to backend
+            const formData = new FormData();
+            formData.append('key', key);
+            try {
+                await fetch('/api/save-key', {
+                    method: 'POST',
+                    body: formData
+                });
+            } catch (err) {
+                console.log("Server sync error:", err);
+            }
+
+            const indicator = document.getElementById('api-indicator');
+            const indicatorText = document.getElementById('api-indicator-text');
+            indicatorText.innerText = "AI Kaliti Faol";
+            indicator.style.borderColor = "rgba(16, 185, 129, 0.4)";
+            indicator.style.color = "#34d399";
+
+            closeKeyModal();
+            alert("✅ API Kalitingiz saqlandi! Endi istalgan taom rasmini yuklab, tahlil qilishingiz mumkin.");
+        }
+
+        // PWA Install Prompt
+        let deferredPrompt;
+        const installBtn = document.getElementById('pwa-install-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (installBtn) {
+                installBtn.style.display = 'inline-flex';
+            }
+        });
+
+        if (installBtn) {
+            installBtn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        installBtn.style.display = 'none';
+                    }
+                    deferredPrompt = null;
+                }
+            });
+        }
+
+        // Service Worker Registration for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('EDA.AI PWA Service Worker ro\'yxatdan o\'tdi:', reg.scope))
+                    .catch(err => console.log('SW xatolik:', err));
+            });
+        }
+    </script>
+</body>
+</html>
